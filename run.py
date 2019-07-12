@@ -1,16 +1,35 @@
-import torch
-import os
-import numpy as np
+# Copyright 2019 DayHR Authors. All Rights Reserved.
+# Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ==============================================================================
+
+
 import argparse
-from PIL import Image
+import os
+
+import numpy as np
+import torch
 import torchvision.transforms as transforms
-from torch.autograd import Variable
 import torchvision.utils as vutils
-from network.Transformer import Transformer
+
+from PIL import Image
+from torch.autograd import Variable
+
+from model.Transformer import Transformer
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--input_dir', default='test_img')
-parser.add_argument('--load_size', default=450)
+parser.add_argument('--input_img', required=True, type=str,
+                    help='Image path to request processing.')
+parser.add_argument('--load_size', default=500)
 parser.add_argument('--model_path', default='./pretrained_model')
 parser.add_argument('--style', default='Hayao')
 parser.add_argument('--output_dir', default='test_output')
@@ -72,6 +91,7 @@ for files in os.listdir(opt.input_dir):
     output_image = output_image[0]
     # BGR -> RGB
     output_image = output_image[[2, 1, 0], :, :]
+
     # deprocess, (0, 1)
     output_image = output_image.data.cpu().float() * 0.5 + 0.5
     # save
