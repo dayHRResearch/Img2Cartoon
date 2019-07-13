@@ -21,7 +21,7 @@ import torch.nn.functional as F
 class Transformer(nn.Module):
     def __init__(self):
         super(Transformer, self).__init__()
-        #
+        # pre layer.
         self.refpad01_1 = nn.ReflectionPad2d(3)
         self.conv01_1 = nn.Conv2d(3, 64, 7)
         self.in01_1 = InstanceNormalization(64)
@@ -115,7 +115,7 @@ class Transformer(nn.Module):
         self.in11_2 = InstanceNormalization(256)
         # + input
 
-        # ------------------------------------ #
+        # Generate
         self.deconv01_1 = nn.ConvTranspose2d(256, 128, 3, 2, 1, 1)
         self.deconv01_2 = nn.Conv2d(128, 128, 3, 1, 1)
         self.in12_1 = InstanceNormalization(128)
