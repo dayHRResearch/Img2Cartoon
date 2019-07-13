@@ -80,14 +80,14 @@ def imshow(img, title=None):
 
 
 def print_top_5():
-    """ Print out the five possible object categories identified by the model.
+    """ Print out the five possible object categories identified by the network.
     """
 
     # Define content and style representations
     # step 1: Processing of images to provide training.
     x = tf.keras.applications.vgg19.preprocess_input(content_image * 255)
     x = tf.image.resize(x, (224, 224))
-    # step 2: Load the pretraining model.
+    # step 2: Load the pretraining network.
     model = tf.keras.applications.VGG19(include_top=True, weights='imagenet')
     # step 3: Classify the possible categories of images.
     prediction_probabilities = model(x)
@@ -121,9 +121,9 @@ num_content_layers = len(content_layers)
 num_style_layers = len(style_layers)
 
 
-# build the model
+# build the network
 def vgg_layers(layer_names):
-    """ Creates a vgg model that returns a list of intermediate output values.
+    """ Creates a vgg network that returns a list of intermediate output values.
 
     Args:
         layer_names: The name of each neuron layer.
@@ -132,7 +132,7 @@ def vgg_layers(layer_names):
         tf.keras.Model(**kawgs).
 
     """
-    # Load our model. Load pretrained VGG, trained on imagenet data
+    # Load our network. Load pretrained VGG, trained on imagenet data
     vgg = tf.keras.applications.VGG19(include_top=False, weights='imagenet')
     vgg.trainable = False
 
@@ -142,7 +142,7 @@ def vgg_layers(layer_names):
     return model
 
 
-# And to create the model.
+# And to create the network.
 style_extractor = vgg_layers(style_layers)
 style_outputs = style_extractor(style_image * 255)
 
@@ -165,7 +165,7 @@ def gram_matrix(input_tensor):
 
 
 # Extract style and content
-# Build a model that returns the style and content tensors.
+# Build a network that returns the style and content tensors.
 class StyleContentModel(tf.keras.models.Model):
     def __init__(self, style_layers, content_layers):
         super(StyleContentModel, self).__init__()

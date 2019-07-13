@@ -23,7 +23,7 @@ valid_ext = ['.jpg', '.png']
 if not os.path.exists(opt.output_dir):
     os.mkdir(opt.output_dir)
 
-# load pretrained model
+# load pretrained network
 model = Transformer()
 model.load_state_dict(
     torch.load(

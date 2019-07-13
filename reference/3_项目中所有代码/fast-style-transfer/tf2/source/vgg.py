@@ -21,14 +21,14 @@ MEAN_PIXEL = np.array([125.555, 125.555, 125.555])
 
 
 def build(data_to_path, inputs):
-    """ Create VGG based neural unit model
+    """ Create VGG based neural unit network
 
     Args:
         data_to_path: Data set file path.
         inputs: input image tensor.
 
     Returns:
-        The generated model file.
+        The generated network file.
     """
     layers = (
         'conv1_1', 'relu1_1', 'conv1_2', 'relu1_2', 'pool1',    # Block 1

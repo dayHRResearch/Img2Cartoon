@@ -24,7 +24,7 @@ import torchvision.utils as vutils
 from PIL import Image
 from torch.autograd import Variable
 
-from model.Transformer import Transformer
+from cartoon.network.Transformer import Transformer
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--input_img', required=True, type=str,
@@ -42,7 +42,7 @@ valid_ext = ['.jpg', '.png']
 if not os.path.exists(opt.output_dir):
     os.mkdir(opt.output_dir)
 
-# load pretrained model
+# load pretrained network
 model = Transformer()
 model.load_state_dict(
     torch.load(

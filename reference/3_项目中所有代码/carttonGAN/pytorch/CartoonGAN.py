@@ -27,7 +27,7 @@ parser.add_argument(
     '--vgg_model',
     required=False,
     default='pre_trained_VGG19_model_path/vgg19.pth',
-    help='pre-trained VGG19 model path')
+    help='pre-trained VGG19 network path')
 parser.add_argument('--in_ngc', type=int, default=3,
                     help='input channel for generator')
 parser.add_argument('--out_ngc', type=int, default=3,
@@ -76,12 +76,12 @@ parser.add_argument(
     '--latest_generator_model',
     required=False,
     default='',
-    help='the latest trained model path')
+    help='the latest trained network path')
 parser.add_argument(
     '--latest_discriminator_model',
     required=False,
     default='',
-    help='the latest trained model path')
+    help='the latest trained network path')
 args = parser.parse_args()
 
 print('------------ Options -------------')
@@ -286,7 +286,7 @@ if args.latest_generator_model == '':
             if n == 4:
                 break
 else:
-    print('Load the latest generator model, no need to pre-train')
+    print('Load the latest generator network, no need to pre-train')
 
 
 train_hist = {'Disc_loss': [], 'Gen_loss': [], 'Con_loss': [], 'per_epoch_time': [], 'total_time': []}
