@@ -27,17 +27,17 @@ from torch.autograd import Variable
 from cartoon.network.Transformer import Transformer
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--input_img', required=True, type=str,
+parser.add_argument('--assert', required=True, type=str,
                     help='Image path to request processing.')
 parser.add_argument('--load_size', default=500)
-parser.add_argument('--model_path', default='./pretrained_model')
+parser.add_argument('--model_path', default='./model')
 parser.add_argument('--style', default='Hayao')
-parser.add_argument('--output_dir', default='test_output')
+parser.add_argument('--output_dir', default='output')
 parser.add_argument('--gpu', type=int, default=0)
 
 opt = parser.parse_args()
 
-valid_ext = ['.jpg', '.png']
+valid_ext = ['.jpg', 'jpeg', '.png']
 
 if not os.path.exists(opt.output_dir):
     os.mkdir(opt.output_dir)
