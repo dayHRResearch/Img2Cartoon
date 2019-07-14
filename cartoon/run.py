@@ -16,86 +16,128 @@
 import argparse
 import os
 
+import cv2
 import numpy as np
 import torch
 import torchvision.transforms as transforms
 import torchvision.utils as vutils
 
-from PIL import Image
 from torch.autograd import Variable
 
-from cartoon.network.Transformer import Transformer
+from cartoon.network.Cartoon import Cartoon
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--assert', required=True, type=str,
-                    help='Image path to request processing.')
-parser.add_argument('--load_size', default=500)
-parser.add_argument('--model_path', default='./model')
-parser.add_argument('--style', default='Hayao')
-parser.add_argument('--output_dir', default='output')
-parser.add_argument('--gpu', type=int, default=0)
+parser = argparse.ArgumentParser('Image to Cartoon Img.')
+parser.add_argument('--input_dir', required=True, type=str, default='assert',
+                    help='Image path to request processing.'
+                         'default: `assert`.')
+parser.add_argument('--img_size', require=False, type=int, default=450,
+                    help='Input image size.'
+                         'default: 50.')
+parser.add_argument('--model', require=False, type=str, default='./model',
+                    help='Model file address.'
+                         'default: `./model`.')
+parser.add_argument('--style', require=False, type=str, default='hayao',
+                    help='Styles to be changed for pictures.'
+                         'default: hayao.'
+                         'option: [`hayao`, `hosoda`, `paprika`, `shinkai`].')
+parser.add_argument('--output_dir', require=False, type=str, default='output',
+                    help='Output image path after style conversion. '
+                         'default: `output`.')
+parser.add_argument('--mode', require=False, type=str, default='gpu',
+                    help='Which model of GPU to use, or use cpu.'
+                         'default: `gpu`'
+                         'option: [`gpu`, `cpu`].')
 
-opt = parser.parse_args()
+args = parser.parse_args()
 
-valid_ext = ['.jpg', 'jpeg', '.png']
+img_suffix = ['.jpg', '.jpeg', '.png']
 
-if not os.path.exists(opt.output_dir):
-    os.mkdir(opt.output_dir)
+MODELFILE = os.path.join(args.model, args.style + '.pth')
 
-# load pretrained network
-model = Transformer()
-model.load_state_dict(
-    torch.load(
-        os.path.join(
-            opt.model_path,
-            opt.style +
-            '_net_G_float.pth')))
+# Create if the output save directory does not exist.
+if not os.path.exists(args.output_dir):
+    os.mkdir(args.output_dir)
+
+# build model
+model = Cartoon()
+
+# load model weights
+model.load_state_dict(torch.load(MODELFILE))
+
+# set model mode is eval
 model.eval()
 
-if opt.gpu > -1:
-    print('GPU mode')
-    model.cuda()
+# check mode status
+if args.mode == 'gpu':
+    if torch.cuda.is_available():
+        print(f'GPU current name: {torch.cuda.current_device()}')
+        print('Use GPU mode!')
+        model.cuda()
+    else:
+        raise ('Please check if your system is properly installed with CUDA'
+               'and if PyTorch`s GPU version is installed.')
 else:
-    print('CPU mode')
+    print('Use CPU mode!')
     model.float()
 
-for files in os.listdir(opt.input_dir):
-    ext = os.path.splitext(files)[1]
-    if ext not in valid_ext:
-        continue
-    # load image
-    input_image = Image.open(os.path.join(opt.input_dir, files)).convert("RGB")
-    # resize image, keep aspect ratio
-    h = input_image.size[0]
-    w = input_image.size[1]
-    ratio = h * 1.0 / w
-    if ratio > 1:
-        h = opt.load_size
-        w = int(h * 1.0 / ratio)
-    else:
-        w = opt.load_size
-        h = int(w * ratio)
-    input_image = input_image.resize((h, w), Image.BICUBIC)
-    input_image = np.asarray(input_image)
-    # RGB -> BGR
-    input_image = input_image[:, :, [2, 1, 0]]
-    input_image = transforms.ToTensor()(input_image).unsqueeze(0)
-    # preprocess, (-1, 1)
-    input_image = -1 + 2 * input_image
-    if opt.gpu > -1:
-        input_image = Variable(input_image, volatile=True).cuda()
-    else:
-        input_image = Variable(input_image, volatile=True).float()
-    # forward
-    output_image = model(input_image)
-    output_image = output_image[0]
-    # BGR -> RGB
-    output_image = output_image[[2, 1, 0], :, :]
 
-    # deprocess, (0, 1)
-    output_image = output_image.data.cpu().float() * 0.5 + 0.5
-    # save
-    vutils.save_image(output_image, os.path.join(
-        opt.output_dir, files[:-4] + '_' + opt.style + '.jpg'))
+def load_image():
+    # Get all the files in the specified directory
+    for img_path in os.listdir(args.input_dir):
+        # Intercept file suffix
+        suffix = os.path.splitsuffix(img_path)[1]
+        if suffix not in img_suffix:
+            continue
+        # load image
+        file_path = os.path.join(args.input_dir, img_path)
+        raw_image = cv2.imread(file_path)
 
-print('Done!')
+        # resize image, keep aspect ratio
+        image_height = raw_image.size[0]
+        image_width = raw_image.size[1]
+        ratio = image_height * 1.0 / image_width
+
+        if ratio > 1:
+            image_height = args.img_size
+            image_width = int(image_height * 1.0 / ratio)
+        else:
+            image_width = args.img_size
+            image_height = int(image_width * ratio)
+
+        raw_image = cv2.resize((image_height, image_width), cv2.INTER_CUBIC)
+        raw_image = np.asarray(raw_image)
+
+        # RGB -> BGR
+        raw_image = raw_image[:, :, [2, 1, 0]]
+        raw_image = transforms.ToTensor()(raw_image).unsqueeze(0)
+
+        # preprocess, (-1, 1)
+        raw_image = -1 + 2 * raw_image
+
+        if args.mode == 'gpu':
+            raw_image = Variable(raw_image, volatile=True).cuda()
+        else:
+            raw_image = Variable(raw_image, volatile=True).float()
+
+        # forward
+        cartoon_image = model(raw_image)
+        cartoon_image = cartoon_image[0]
+        # BGR -> RGB
+        cartoon_image = cartoon_image[[2, 1, 0], :, :]
+
+        # deprocess, (0, 1)
+        cartoon_image = cartoon_image.data.cpu().float() * 0.5 + 0.5
+
+        return cartoon_image, img_path
+
+
+def imsave(tensor, img_path):
+    filename = os.path.join(
+        args.output_dir, img_path[:-4] + '_' + args.style + '.png')
+    vutils.save_image(tensor, filename)
+
+
+if __name__ == "__main__":
+    load_image()
+    imsave()
+    print("Img transfer cartoon successful!")
