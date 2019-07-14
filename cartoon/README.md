@@ -24,7 +24,7 @@ cd Img2Cartoon
 
 #### Linux
 
-##### CPU
+- CPU
 
 ```text
 pip3 install https://download.pytorch.org/whl/cpu/torch-1.1.0-cp37-cp37m-linux_x86_64.whl
@@ -32,7 +32,7 @@ pip3 install https://download.pytorch.org/whl/cpu/torchvision-0.3.0-cp37-cp37m-l
 pip3 install -r requirements.txt
 ```
 
-##### GPU
+- GPU
 
 ```text
 pip3 install https://download.pytorch.org/whl/cu100/torch-1.1.0-cp37-cp37m-linux_x86_64.whl
@@ -42,7 +42,7 @@ pip3 install -r requirements.txt
 
 #### Windows
 
-##### CPU
+- CPU
 
 ```text
 pip3 install https://download.pytorch.org/whl/cpu/torch-1.1.0-cp37-cp37m-win_amd64.whl
@@ -50,7 +50,7 @@ pip3 install https://download.pytorch.org/whl/cpu/torchvision-0.3.0-cp37-cp37m-w
 pip3 install -r requirements.txt
 ```
 
-##### GPU
+- GPU
 
 ```text
 pip3 install https://download.pytorch.org/whl/cu100/torch-1.1.0-cp37-cp37m-win_amd64.whl
@@ -58,7 +58,7 @@ pip3 install https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp37-cp37m
 pip3 install -r requirements.txt
 ```
 
-## Download pre trained model file.
+## Download pre trained model file
 
 You can load the trained model `pth` file directly.
 
@@ -122,4 +122,6 @@ python run.py --input_dir YourImgDir --style Hosoda --gpu 0
 
 ## Acknowledgement
 
-- Code borrows from [DCGAN](https://github.com/soumith/dcgan.torch), [CycleGAN](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix).
+- Code borrows from
+- [DCGAN](https://github.com/soumith/dcgan.torch)
+- [CycleGAN](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix).
