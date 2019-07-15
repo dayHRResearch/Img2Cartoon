@@ -30,6 +30,7 @@
 import argparse
 import os
 import sys
+sys.path.append(os.path.join(os.path.split(os.path.realpath(__file__))[0], '../..'))
 
 import cv2
 import numpy as np
@@ -40,9 +41,6 @@ import torchvision.utils as vutils
 from torch.autograd import Variable
 
 from source.network.Cartoon import Cartoon
-
-sys.path.append(os.path.join(os.path.split(os.path.realpath(__file__))[0], '../..'))
-
 
 parser = argparse.ArgumentParser('Image to Cartoon Img.')
 parser.add_argument('--input_dir', required=False, type=str, default='source/test/raw_img',
