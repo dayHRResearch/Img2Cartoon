@@ -81,6 +81,26 @@ else:
     model.float()
 
 
+def preprocess(file_path):
+    raw_image = cv2.imread(file_path)
+
+    # resize image, keep aspect ratio
+    image_height = raw_image.size[0]
+    image_width = raw_image.size[1]
+    ratio = image_height * 1.0 / image_width
+
+    if ratio > 1:
+        image_height = args.img_size
+        image_width = int(image_height * 1.0 / ratio)
+    else:
+        image_width = args.img_size
+        image_height = int(image_width * ratio)
+
+    raw_image = cv2.resize((image_height, image_width), cv2.INTER_CUBIC)
+
+    return raw_image
+
+
 def load_data():
     # Get all the files in the specified directory
     for img_path in os.listdir(args.input_dir):
@@ -90,21 +110,9 @@ def load_data():
             continue
         # load image
         file_path = os.path.join(args.input_dir, img_path)
-        raw_image = cv2.imread(file_path)
 
-        # resize image, keep aspect ratio
-        image_height = raw_image.size[0]
-        image_width = raw_image.size[1]
-        ratio = image_height * 1.0 / image_width
+        raw_image = preprocess(file_path)
 
-        if ratio > 1:
-            image_height = args.img_size
-            image_width = int(image_height * 1.0 / ratio)
-        else:
-            image_width = args.img_size
-            image_height = int(image_width * ratio)
-
-        raw_image = cv2.resize((image_height, image_width), cv2.INTER_CUBIC)
         raw_image = np.asarray(raw_image)
 
         # RGB -> BGR
