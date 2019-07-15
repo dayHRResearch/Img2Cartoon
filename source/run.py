@@ -45,8 +45,8 @@ sys.path.append(
 
 
 parser = argparse.ArgumentParser('Image to Cartoon Img.')
-parser.add_argument('--input_dir', required=True, type=str,
-                    help='Image path to request processing.')
+# parser.add_argument('--input_dir', required=True, type=str,
+#                    help='Image path to request processing.')
 parser.add_argument('--img_size', required=False, type=int, default=512,
                     help='Input image size.'
                          'default: 512.')
