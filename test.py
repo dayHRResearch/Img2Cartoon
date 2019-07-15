@@ -41,20 +41,20 @@ from torch.autograd import Variable
 from source.network.Cartoon import Cartoon
 
 parser = argparse.ArgumentParser('Image to Cartoon Img.')
-parser.add_argument('--input_dir', required=False, type=str, default='test/raw_img',
+parser.add_argument('--input_dir', required=False, type=str, default='source/test/raw_img',
                     help='Image path to request processing.'
                          'default: `test/raw_img`.')
 parser.add_argument('--img_size', required=False, type=int, default=512,
                     help='Input image size.'
-                         'default: 450.')
-parser.add_argument('--model', required=False, type=str, default='./model',
+                         'default: 512.')
+parser.add_argument('--model', required=False, type=str, default='./source/model',
                     help='Model file address.'
                          'default: `./model`.')
 parser.add_argument('--style', required=False, type=str, default='hayao',
                     help='Styles to be changed for pictures.'
                          'default: hayao.'
                          'option: [`hayao`, `hosoda`, `paprika`, `shinkai`].')
-parser.add_argument('--output_dir', required=False, type=str, default='test/out_img',
+parser.add_argument('--output_dir', required=False, type=str, default='source/test/out_img',
                     help='Output image path after style conversion. '
                          'default: `test/out_img`.')
 parser.add_argument('--mode', required=False, type=str, default='gpu',
