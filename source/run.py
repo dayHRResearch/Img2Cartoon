@@ -32,7 +32,7 @@ parser.add_argument('--input_dir', required=True, type=str, default='assert',
                          'default: `assert`.')
 parser.add_argument('--img_size', require=False, type=int, default=450,
                     help='Input image size.'
-                         'default: 50.')
+                         'default: 450.')
 parser.add_argument('--model', require=False, type=str, default='./model',
                     help='Model file address.'
                          'default: `./model`.')
