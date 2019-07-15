@@ -27,17 +27,20 @@
 # ==============================================================================
 
 
-from source.network.Cartoon import Cartoon
-from torch.autograd import Variable
-import torchvision.utils as vutils
-import torchvision.transforms as transforms
-import torch
-import numpy as np
-import cv2
 import argparse
 import os
 import sys
 sys.path.append(os.path.join(os.path.split(os.path.realpath(__file__))[0], '../'))
+
+import cv2
+import numpy as np
+import torch
+import torchvision.transforms as transforms
+import torchvision.utils as vutils
+
+from torch.autograd import Variable
+
+from source.network.Cartoon import Cartoon
 
 parser = argparse.ArgumentParser('Image to Cartoon Img.')
 # parser.add_argument('--input_dir', required=True, type=str,
