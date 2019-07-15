@@ -168,8 +168,8 @@ def main(inputs_dir):
 
 if __name__ == '__main__':
     while True:
-        input_dir = input("Process dir path:")
-        if input_dir is None:
+        input_dir = input("Process dir path (input `0` exit.):")
+        if input_dir == '0':
             print("Warn exit. return status 0.")
             exit(0)
         else:
