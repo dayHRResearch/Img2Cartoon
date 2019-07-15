@@ -44,7 +44,7 @@ parser = argparse.ArgumentParser('Image to Cartoon Img.')
 parser.add_argument('--input_dir', required=False, type=str, default='test/raw_img',
                     help='Image path to request processing.'
                          'default: `test/raw_img`.')
-parser.add_argument('--img_size', required=False, type=int, default=450,
+parser.add_argument('--img_size', required=False, type=int, default=512,
                     help='Input image size.'
                          'default: 450.')
 parser.add_argument('--model', required=False, type=str, default='./model',
@@ -84,7 +84,7 @@ model.eval()
 # check mode status
 if args.mode == 'gpu':
     if torch.cuda.is_available():
-        print(f'GPU current name: {torch.cuda.current_device()}')
+        print(f'GPU current name: {torch.cuda.get_device_name()}')
         print('Use GPU mode!')
         model.cuda()
     else:
