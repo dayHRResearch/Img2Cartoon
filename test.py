@@ -84,7 +84,6 @@ model.eval()
 # check mode status
 if args.mode == 'gpu':
     if torch.cuda.is_available():
-        print(f'GPU current name: {torch.cuda.get_device_name()}')
         print('Use GPU mode!')
         model.cuda()
     else:
