@@ -74,7 +74,15 @@ if not os.path.exists(args.output_dir):
 
 
 def preprocess(file_path):
+    """ Preprocess the image.
 
+    Args:
+        file_path: Directory of files to be processed.
+
+    Returns:
+        numpy.array()
+
+    """
     raw_image = cv2.imread(file_path)
 
     # resize image, keep aspect ratio
@@ -94,6 +102,8 @@ def preprocess(file_path):
 
 
 def main():
+    """ File main function access point.
+    """
     # build model
     model = Cartoon()
 
