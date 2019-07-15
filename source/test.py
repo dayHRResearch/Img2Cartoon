@@ -32,9 +32,9 @@ parser = argparse.ArgumentParser('Image to Cartoon Img.')
 parser.add_argument('--input_dir', required=False, type=str, default='test/raw_img',
                     help='Image path to request processing.'
                          'default: `test/raw_img`.')
-parser.add_argument('--img_size', required=False, type=int, default=512,
+parser.add_argument('--img_size', required=False, type=int, default=1024,
                     help='Input image size.'
-                         'default: 512.')
+                         'default: 1024.')
 parser.add_argument('--model', required=False, type=str, default='./model',
                     help='Model file address.'
                          'default: `./model`.')
