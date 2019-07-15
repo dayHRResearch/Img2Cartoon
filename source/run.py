@@ -81,11 +81,11 @@ else:
     model.float()
 
 
-def load_image():
+def load_data():
     # Get all the files in the specified directory
     for img_path in os.listdir(args.input_dir):
         # Intercept file suffix
-        suffix = os.path.splitsuffix(img_path)[1]
+        suffix = os.path.splitext(img_path)[1]
         if suffix not in img_suffix:
             continue
         # load image
@@ -138,6 +138,6 @@ def imsave(tensor, img_path):
 
 
 if __name__ == "__main__":
-    load_image()
-    imsave()
+    image, image_path = load_data()
+    imsave(image, image_path)
     print("Img transfer source successful!")
