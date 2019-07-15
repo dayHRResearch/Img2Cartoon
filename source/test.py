@@ -116,7 +116,7 @@ def preprocess(file_path):
     return raw_image
 
 
-def load_data():
+def main():
     # Get all the files in the specified directory
     for img_path in os.listdir(args.input_dir):
         # Intercept file suffix
@@ -152,16 +152,10 @@ def load_data():
         # deprocess, (0, 1)
         cartoon_image = cartoon_image.data.cpu().float() * 0.5 + 0.5
 
-        return cartoon_image, img_path
-
-
-def imsave(tensor, img_path):
-    filename = os.path.join(
-        args.output_dir, img_path[:-4] + '_' + args.style + '.png')
-    vutils.save_image(tensor, filename)
+        filename = os.path.join(args.output_dir, img_path[:-4] + '_' + args.style + '.png')
+        vutils.save_image(cartoon_image, img_path)
 
 
 if __name__ == '__main__':
-    image, image_path = load_data()
-    imsave(image, image_path)
+    main()
     print("Img transfer source successful!")
