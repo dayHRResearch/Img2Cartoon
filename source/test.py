@@ -41,22 +41,22 @@ from torch.autograd import Variable
 from source.network.Cartoon import Cartoon
 
 parser = argparse.ArgumentParser('Image to Cartoon Img.')
-parser.add_argument('--input_dir', required=False, type=str, default='raw_img',
+parser.add_argument('--input_dir', required=False, type=str, default='test/raw_img',
                     help='Image path to request processing.'
-                         'default: `raw_img`.')
+                         'default: `test/raw_img`.')
 parser.add_argument('--img_size', require=False, type=int, default=450,
                     help='Input image size.'
                          'default: 450.')
-parser.add_argument('--model', require=False, type=str, default='../model',
+parser.add_argument('--model', require=False, type=str, default='./model',
                     help='Model file address.'
-                         'default: `../model`.')
+                         'default: `./model`.')
 parser.add_argument('--style', require=False, type=str, default='hayao',
                     help='Styles to be changed for pictures.'
                          'default: hayao.'
                          'option: [`hayao`, `hosoda`, `paprika`, `shinkai`].')
-parser.add_argument('--output_dir', require=False, type=str, default='out_img',
+parser.add_argument('--output_dir', require=False, type=str, default='test/out_img',
                     help='Output image path after style conversion. '
-                         'default: `out_img`.')
+                         'default: `test/out_img`.')
 parser.add_argument('--mode', require=False, type=str, default='gpu',
                     help='Which model of GPU to use, or use cpu.'
                          'default: `gpu`'
@@ -159,6 +159,7 @@ def imsave(tensor, img_path):
     vutils.save_image(tensor, filename)
 
 
-image, image_path = load_data()
-imsave(image, image_path)
-print("Img transfer source successful!")
+if __name__ == '__main__':
+    image, image_path = load_data()
+    imsave(image, image_path)
+    print("Img transfer source successful!")
