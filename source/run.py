@@ -170,8 +170,10 @@ if __name__ == '__main__':
     while True:
         input_dir = input("Process dir path (input `0` exit.):")
         if input_dir == '0':
-            print("Warn exit. return status 0.")
+            print("Seccessful exit!\nreturn code -1.")
             exit(0)
-        else:
+        elif input_dir != '0':
             main(input_dir)
-            print("Img transfer source successful!")
+            print("Img transfer source successful!\nreturn code 0")
+        else:
+            continue
