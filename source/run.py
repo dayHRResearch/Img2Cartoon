@@ -42,7 +42,7 @@ from torch.autograd import Variable
 
 from source.network.Cartoon import Cartoon
 
-parser = argparse.ArgumentParser('Image to Cartoon Img.')
+parser = argparse.ArgumentParser('Image to Cartoon Img.\n')
 # parser.add_argument('--input_dir', required=True, type=str,
 #                    help='Image path to request processing.')
 parser.add_argument('--img_size', required=False, type=int, default=512,
@@ -51,26 +51,18 @@ parser.add_argument('--img_size', required=False, type=int, default=512,
 parser.add_argument('--model', required=False, type=str, default='./model',
                     help='Model file address.'
                          'default: `./model`.')
-parser.add_argument('--style', required=False, type=str, default='hayao',
-                    help='Styles to be changed for pictures.'
-                         'default: hayao.'
-                         'option: [`hayao`, `hosoda`, `paprika`, `shinkai`].')
-parser.add_argument('--output_dir', required=True, type=str,
-                    help='Output image path after style conversion.')
+# parser.add_argument('--style', required=False, type=str, default='hayao',
+#                     help='Styles to be changed for pictures.'
+#                          'default: hayao.'
+#                          'option: [`hayao`, `hosoda`, `paprika`, `shinkai`].')
+# parser.add_argument('--output_dir', required=True, type=str,
+#                     help='Output image path after style conversion.')
 parser.add_argument('--mode', required=False, type=str, default='gpu',
                     help='Which model of GPU to use, or use cpu.'
                          'default: `gpu`'
                          'option: [`gpu`, `cpu`].')
 
 args = parser.parse_args()
-
-img_suffix = ['.jpg', '.jpeg', '.png']
-
-MODELFILE = os.path.join(args.model, args.style + '.pth')
-
-# Create if the output save directory does not exist.
-if not os.path.exists(args.output_dir):
-    os.mkdir(args.output_dir)
 
 
 def preprocess(file_path):
@@ -98,6 +90,8 @@ def preprocess(file_path):
         image_height = int(image_width * ratio)
 
     cv2.resize(raw_image, (image_height, image_width), cv2.INTER_CUBIC)
+    print(image_height)
+    print(image_width)
     return raw_image
 
 
@@ -107,8 +101,18 @@ def main(inputs_dir):
     # build model
     model = Cartoon()
 
+    img_suffix = ['.jpg', '.jpeg', '.png']
+
     # load model weights
-    model.load_state_dict(torch.load(MODELFILE))
+    style = input('Image style.choose [`hayao`, `hosoda`, `paprika`, `shinkai`]: ')
+
+    output_dir = input('Image save path: ')
+    # Create if the output save directory does not exist.
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
+
+    model_file = os.path.join(args.model, style + '.pth')
+    model.load_state_dict(torch.load(model_file))
 
     # set model mode is eval
     model.eval()
@@ -160,19 +164,20 @@ def main(inputs_dir):
         # deprocess, (0, 1)
         cartoon_image = cartoon_image.data.cpu().float() * 0.5 + 0.5
 
-        img_path = os.path.join(args.output_dir,
-                                img_path[:-4] + '_' + args.style + '.png')
+        img_path = os.path.join(output_dir,
+                                img_path[:-4] + '_' + style + '.png')
         vutils.save_image(cartoon_image, img_path)
 
 
 if __name__ == '__main__':
     while True:
         input_dir = input("Process dir path (input `0` exit.):")
+        if input_dir == '0':
+            print("Successful exit!\nreturn code -1.")
+            exit(0)
+
         if os.path.exists(input_dir):
-            if input_dir == '0':
-                print("Seccessful exit!\nreturn code -1.")
-                exit(0)
-            else:
+            if input_dir is not None:
                 main(input_dir)
                 print("Img transfer source successful!\nreturn code 0")
         else:
