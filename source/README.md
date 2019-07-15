@@ -70,7 +70,7 @@ sh model/download.sh
 
 - For testing:
 
-```python
+```text
 python run.py --input_dir YourImgDir --style Hosoda --gpu 0
 ```
 
