@@ -84,43 +84,43 @@ python source/test.py
 ## Examples (Left: original, Right: output)
 
 <p>
-    <img src='assert/demo1.png' width=300 />
-    <img src='output/demo1_Hayao.png' width=300 />
+    <img src='test/raw_img/demo1.png' width=300 />
+    <img src='test/out_img/demo1_hayao.png' width=300 />
 </p>
 
 <p>
-    <img src='assert/demo1.png' width=300 />
-    <img src='output/demo1_Hosoda.png' width=300 />
+    <img src='test/raw_img/demo1.png' width=300 />
+    <img src='test/out_img/demo1_hosoda.png' width=300 />
 </p>
 
 <p>
-    <img src='assert/demo1.png' width=300 />
-    <img src='output/demo1_Paprika.png' width=300 />
+    <img src='test/raw_img/demo1.png' width=300 />
+    <img src='test/out_img/demo1_paprika.png' width=300 />
 </p>
 
 <p>
-    <img src='assert/demo1.png' width=300 />
-    <img src='output/demo1_Shinkai.png' width=300 />
+    <img src='test/raw_img/demo1.png' width=300 />
+    <img src='test/out_img/demo1_shinkai.png' width=300 />
 </p>
 
 <p>
-    <img src='assert/demo2.png' width=300 />
-    <img src='output/demo2_Hayao.png' width=300 />
+    <img src='test/raw_img/demo2.png' width=300 />
+    <img src='test/out_img/demo2_hayao.png' width=300 />
 </p>
 
 <p>
-    <img src='assert/demo2.png' width=300 />
-    <img src='output/demo2_Hosoda.png' width=300 />
+    <img src='test/raw_img/demo2.png' width=300 />
+    <img src='test/out_img/demo2_hosoda.png' width=300 />
 </p>
 
 <p>
-    <img src='assert/demo2.png' width=300 />
-    <img src='output/demo2_Paprika.png' width=300 />
+    <img src='test/raw_img/demo2.png' width=300 />
+    <img src='test/out_img/demo2_paprika.png' width=300 />
 </p>
 
 <p>
-    <img src='assert/demo2.png' width=300 />
-    <img src='output/demo2_Shinkai.png' width=300 />
+    <img src='test/raw_img/demo2.png' width=300 />
+    <img src='test/out_img/demo2_shinkai.png' width=300 />
 </p>
 
 ## Note
