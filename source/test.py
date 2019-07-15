@@ -152,7 +152,7 @@ def main():
         # deprocess, (0, 1)
         cartoon_image = cartoon_image.data.cpu().float() * 0.5 + 0.5
 
-        filename = os.path.join(args.output_dir, img_path[:-4] + '_' + args.style + '.png')
+        img_path = os.path.join(args.output_dir, img_path[:-4] + '_' + args.style + '.png')
         vutils.save_image(cartoon_image, img_path)
 
 
