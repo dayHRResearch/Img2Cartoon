@@ -44,20 +44,20 @@ parser = argparse.ArgumentParser('Image to Cartoon Img.')
 parser.add_argument('--input_dir', required=False, type=str, default='test/raw_img',
                     help='Image path to request processing.'
                          'default: `test/raw_img`.')
-parser.add_argument('--img_size', require=False, type=int, default=450,
+parser.add_argument('--img_size', required=False, type=int, default=450,
                     help='Input image size.'
                          'default: 450.')
-parser.add_argument('--model', require=False, type=str, default='./model',
+parser.add_argument('--model', required=False, type=str, default='./model',
                     help='Model file address.'
                          'default: `./model`.')
-parser.add_argument('--style', require=False, type=str, default='hayao',
+parser.add_argument('--style', required=False, type=str, default='hayao',
                     help='Styles to be changed for pictures.'
                          'default: hayao.'
                          'option: [`hayao`, `hosoda`, `paprika`, `shinkai`].')
-parser.add_argument('--output_dir', require=False, type=str, default='test/out_img',
+parser.add_argument('--output_dir', required=False, type=str, default='test/out_img',
                     help='Output image path after style conversion. '
                          'default: `test/out_img`.')
-parser.add_argument('--mode', require=False, type=str, default='gpu',
+parser.add_argument('--mode', required=False, type=str, default='gpu',
                     help='Which model of GPU to use, or use cpu.'
                          'default: `gpu`'
                          'option: [`gpu`, `cpu`].')
@@ -96,11 +96,12 @@ else:
 
 
 def preprocess(file_path):
+
     raw_image = cv2.imread(file_path)
 
     # resize image, keep aspect ratio
-    image_height = raw_image.size[0]
-    image_width = raw_image.size[1]
+    image_height = raw_image.shape[0]
+    image_width = raw_image.shape[1]
     ratio = image_height * 1.0 / image_width
 
     if ratio > 1:
@@ -110,8 +111,7 @@ def preprocess(file_path):
         image_width = args.img_size
         image_height = int(image_width * ratio)
 
-    raw_image = cv2.resize((image_height, image_width), cv2.INTER_CUBIC)
-
+    cv2.resize(raw_image, (image_height, image_width), cv2.INTER_CUBIC)
     return raw_image
 
 
@@ -136,10 +136,11 @@ def load_data():
         # preprocess, (-1, 1)
         raw_image = -1 + 2 * raw_image
 
-        if args.mode == 'gpu':
-            raw_image = Variable(raw_image, volatile=True).cuda()
-        else:
-            raw_image = Variable(raw_image, volatile=True).float()
+        with torch.no_grad():
+            if args.mode == 'gpu':
+                raw_image = Variable(raw_image).cuda()
+            else:
+                raw_image = Variable(raw_image).float()
 
         # forward
         cartoon_image = model(raw_image)
