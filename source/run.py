@@ -75,7 +75,7 @@ def preprocess(file_path):
         image_width = args.img_size
         image_height = int(image_width * ratio)
 
-    cv2.resize(raw_image, (image_height, image_width), cv2.INTER_CUBIC)
+    raw_image = cv2.resize(raw_image, (image_height, image_width), cv2.INTER_CUBIC)
     print(image_height)
     print(image_width)
     return raw_image
