@@ -24,7 +24,7 @@ import torchvision.utils as vutils
 
 from torch.autograd import Variable
 
-from cartoon.network.Cartoon import Cartoon
+from source.network.Cartoon import Cartoon
 
 parser = argparse.ArgumentParser('Image to Cartoon Img.')
 parser.add_argument('--input_dir', required=True, type=str, default='assert',
@@ -140,4 +140,4 @@ def imsave(tensor, img_path):
 if __name__ == "__main__":
     load_image()
     imsave()
-    print("Img transfer cartoon successful!")
+    print("Img transfer source successful!")
