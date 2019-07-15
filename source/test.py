@@ -160,6 +160,7 @@ def imsave(tensor, img_path):
     vutils.save_image(tensor, filename)
 
 
-image, image_path = load_data()
-imsave(image, image_path)
-print("Img transfer source successful!")
+if __name__ == '__main__':
+    image, image_path = load_data()
+    imsave(image, image_path)
+    print("Img transfer source successful!")
