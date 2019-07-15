@@ -37,12 +37,7 @@ import cv2
 import argparse
 import os
 import sys
-sys.path.append(
-    os.path.join(
-        os.path.split(
-            os.path.realpath(__file__))[0],
-        '../../'))
-
+sys.path.append(os.path.join(os.path.split(os.path.realpath(__file__))[0], '../'))
 
 parser = argparse.ArgumentParser('Image to Cartoon Img.')
 # parser.add_argument('--input_dir', required=True, type=str,
