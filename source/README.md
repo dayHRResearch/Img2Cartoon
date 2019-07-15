@@ -83,6 +83,8 @@ python source/test.py
 
 ## Examples (Left: original, Right: output)
 
+
+![demo1.png](test/raw_img/demo1.png)
 <p>
     <img src='test/raw_img/demo1.png' width=300 />
     <img src='test/out_img/demo1_hayao.png' width=300 />
