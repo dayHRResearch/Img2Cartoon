@@ -31,7 +31,7 @@ from source.network.Cartoon import Cartoon
 parser = argparse.ArgumentParser('Image to Cartoon Img.\n')
 # parser.add_argument('--input_dir', required=True, type=str,
 #                    help='Image path to request processing.')
-parser.add_argument('--img_size', required=False, type=int, default=1024,
+parser.add_argument('--img_size', required=False, type=int, default=1440,
                     help='Input image size.'
                          'default: 512.')
 parser.add_argument('--model', required=False, type=str, default='./model',
