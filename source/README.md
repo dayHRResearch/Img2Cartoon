@@ -68,10 +68,17 @@ You can load the trained model `pth` file directly.
 sh model/download.sh
 ```
 
+- For running:
+
+```text
+python source/run.py --input_dir YourImgDir --output_dir OutImgDir
+
+```
+
 - For testing:
 
 ```text
-python run.py --input_dir YourImgDir --style Hosoda --gpu 0
+python source/test.py
 ```
 
 ## Examples (Left: original, Right: output)
