@@ -27,20 +27,22 @@
 # ==============================================================================
 
 
+from source.network.Cartoon import Cartoon
+from torch.autograd import Variable
+import torchvision.utils as vutils
+import torchvision.transforms as transforms
+import torch
+import numpy as np
+import cv2
 import argparse
 import os
 import sys
-sys.path.append(os.path.join(os.path.split(os.path.realpath(__file__))[0], '../'))
+sys.path.append(
+    os.path.join(
+        os.path.split(
+            os.path.realpath(__file__))[0],
+        '../'))
 
-import cv2
-import numpy as np
-import torch
-import torchvision.transforms as transforms
-import torchvision.utils as vutils
-
-from torch.autograd import Variable
-
-from source.network.Cartoon import Cartoon
 
 parser = argparse.ArgumentParser('Image to Cartoon Img.')
 parser.add_argument('--input_dir', required=True, type=str,
@@ -101,7 +103,7 @@ def preprocess(file_path):
     return raw_image
 
 
-def main():
+def main(inputs_dir):
     """ File main function access point.
     """
     # build model
@@ -119,20 +121,21 @@ def main():
             print('Use GPU mode!')
             model.cuda()
         else:
-            raise ('Please check if your system is properly installed with CUDA'
-                   'and if PyTorch`s GPU version is installed.')
+            raise (
+                'Please check if your system is properly installed with CUDA'
+                'and if PyTorch`s GPU version is installed.')
     else:
         print('Use CPU mode!')
         model.float()
 
     # Get all the files in the specified directory
-    for img_path in os.listdir(args.input_dir):
+    for img_path in os.listdir(inputs_dir):
         # Intercept file suffix
         suffix = os.path.splitext(img_path)[1]
         if suffix not in img_suffix:
             continue
         # load image
-        file_path = os.path.join(args.input_dir, img_path)
+        file_path = os.path.join(inputs_dir, img_path)
 
         raw_image = preprocess(file_path)
 
@@ -160,10 +163,17 @@ def main():
         # deprocess, (0, 1)
         cartoon_image = cartoon_image.data.cpu().float() * 0.5 + 0.5
 
-        img_path = os.path.join(args.output_dir, img_path[:-4] + '_' + args.style + '.png')
+        img_path = os.path.join(args.output_dir,
+                                img_path[:-4] + '_' + args.style + '.png')
         vutils.save_image(cartoon_image, img_path)
 
 
 if __name__ == '__main__':
-    main()
-    print("Img transfer source successful!")
+    while True:
+        input_dir = input("Process dir path:")
+        if input_dir is None:
+            print("Warn exit. return status 0.")
+            exit(0)
+        else:
+            main(input_dir)
+            print("Img transfer source successful!")
