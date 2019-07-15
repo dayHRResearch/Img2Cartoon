@@ -97,6 +97,15 @@ else:
 
 
 def preprocess(file_path):
+    """ Preprocess the image.
+
+    Args:
+        file_path: Directory of files to be processed.
+
+    Returns:
+        numpy.array()
+
+    """
 
     raw_image = cv2.imread(file_path)
 
@@ -117,6 +126,8 @@ def preprocess(file_path):
 
 
 def main():
+    """ File main function access point.
+    """
     # Get all the files in the specified directory
     for img_path in os.listdir(args.input_dir):
         # Intercept file suffix
