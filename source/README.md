@@ -65,7 +65,8 @@ You can load the trained model `pth` file directly.
 - Download the converted models:
 
 ```text
-sh model/download.sh
+cd Img2Cartoon/source/model
+sh download.sh
 ```
 
 - For running:
