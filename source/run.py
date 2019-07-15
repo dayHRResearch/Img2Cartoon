@@ -176,4 +176,5 @@ if __name__ == '__main__':
                 main(input_dir)
                 print("Img transfer source successful!\nreturn code 0")
         else:
-            raise Exception(f'FileNotFoundError: No such file or directory: `{input_dir}`')
+            raise Exception(f'FileNotFoundError: No such file or directory: `{input_dir}`!'
+                            f'return code -2')
