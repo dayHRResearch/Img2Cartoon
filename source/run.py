@@ -119,9 +119,8 @@ def main(inputs_dir):
             print('Use GPU mode!')
             model.cuda()
         else:
-            raise (
-                'Please check if your system is properly installed with CUDA'
-                'and if PyTorch`s GPU version is installed.')
+            raise Exception('Please check if your system is properly installed with CUDA'
+                            'and if PyTorch`s GPU version is installed.')
     else:
         print('Use CPU mode!')
         model.float()
@@ -169,11 +168,12 @@ def main(inputs_dir):
 if __name__ == '__main__':
     while True:
         input_dir = input("Process dir path (input `0` exit.):")
-        if input_dir == '0':
-            print("Seccessful exit!\nreturn code -1.")
-            exit(0)
-        elif input_dir != '0':
-            main(input_dir)
-            print("Img transfer source successful!\nreturn code 0")
+        if os.path.exists(input_dir):
+            if input_dir == '0':
+                print("Seccessful exit!\nreturn code -1.")
+                exit(0)
+            else:
+                main(input_dir)
+                print("Img transfer source successful!\nreturn code 0")
         else:
-            continue
+            raise Exception(f'FileNotFoundError: No such file or directory: `{input_dir}`')
